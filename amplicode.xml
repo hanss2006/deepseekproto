@@ -7,6 +7,11 @@
           <package value="com.hanss.ds" />
         </packages>
       </persistence-unit>
+      <persistence-unit name="model">
+        <packages>
+          <package value="com.hanss.ds.model" />
+        </packages>
+      </persistence-unit>
     </persistence-units>
   </component>
 </project>
