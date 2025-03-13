@@ -1,4 +1,4 @@
-package com.hanss.ds;
+package com.hanss.ds.service;
 
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.chat.messages.UserMessage;

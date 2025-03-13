@@ -1,5 +1,6 @@
-package com.hanss.ds;
+package com.hanss.ds.controller;
 
+import com.hanss.ds.service.OllamaService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
