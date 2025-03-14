@@ -6,6 +6,7 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.document.Document;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,8 @@ public class DocumentService {
         this.vectorStore = vectorStore;
     }
 
-    public void saveDocument(String content, Map<String, Object> metadata) {
-        List<Document> documents = List.of(new Document(content, metadata));
+    public void saveDocument(String content, Map<String, String> metadata) {
+        List<Document> documents = List.of(new Document(content,  new HashMap<>(metadata)));
         // Add the documents to PGVector
         vectorStore.add(documents);
     }

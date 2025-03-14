@@ -1,5 +1,6 @@
 package com.hanss.ds.controller;
 
+import com.hanss.ds.dto.SaveVectorData;
 import com.hanss.ds.service.DocumentService;
 import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class DocumentController {
     }
 
     @PostMapping("/save")
-    public void saveDocument(@RequestBody String content, @RequestBody Map<String, Object> metadata) {
-        documentService.saveDocument(content, metadata);
+    public void saveDocument(@RequestBody SaveVectorData saveVectorData) {
+        documentService.saveDocument(saveVectorData.getContent(), saveVectorData.getMetadata());
     }
 }
