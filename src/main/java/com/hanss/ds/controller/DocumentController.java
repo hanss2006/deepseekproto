@@ -6,13 +6,12 @@ import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/documents")
 public class DocumentController {
 
-    private DocumentService documentService;
+    private final DocumentService documentService;
 
     public DocumentController(DocumentService documentService) {
         this.documentService = documentService;
