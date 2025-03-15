@@ -1,6 +1,6 @@
 package com.hanss.ds.controller;
 
-import com.hanss.ds.dto.SaveVectorData;
+import com.hanss.ds.dto.VectorDataDTO;
 import com.hanss.ds.service.DocumentService;
 import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/search")
-    public List<Document> searchDocuments(@RequestParam String prompt) {
-        return documentService.findSimilarDocuments(prompt);
+    @PostMapping("/search")
+    public List<Document> searchDocuments(@RequestBody VectorDataDTO searchVectorData) {
+        return documentService.findSimilarDocuments(searchVectorData.getContent(), searchVectorData.getMetadata());
     }
 
     @PostMapping("/save")
-    public void saveDocument(@RequestBody SaveVectorData saveVectorData) {
-        documentService.saveDocument(saveVectorData.getContent(), saveVectorData.getMetadata());
+    public void saveDocument(@RequestBody VectorDataDTO vectorDataDTO) {
+        documentService.saveDocument(vectorDataDTO.getContent(), vectorDataDTO.getMetadata());
     }
 }
