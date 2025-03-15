@@ -18,6 +18,13 @@ services:
       retries: 5
   ollama:
     image: 'ollama/ollama:latest'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ "gpu" ]
+              count: all  # Adjust count for the number of GPUs you want to use
     ports:
       - '11434:11434'
     volumes:
