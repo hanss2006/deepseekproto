@@ -15,6 +15,6 @@ public class ChatController {
 
     @PostMapping
     public String chat(@RequestBody String userInput) {
-        return ollamaService.chatWithModel(userInput);
+        return ollamaService.askQuestion(userInput);
     }
 }
