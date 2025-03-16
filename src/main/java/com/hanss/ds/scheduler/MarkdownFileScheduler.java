@@ -12,6 +12,7 @@ import com.hanss.ds.config.AppConfig;
 import com.hanss.ds.service.DocumentService;
 import com.hanss.ds.utils.Const;
 import com.hanss.ds.utils.UrlEncoder;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +36,7 @@ public class MarkdownFileScheduler {
     private void processDirectory(String url) throws IOException {
         // Получаем список файлов
         List<DavResource> resources = sardine.list(url);
-
+        TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();
         for (int i=1; i<resources.size(); i++) {
             DavResource resource = resources.get(i);
             String name = UrlEncoder.encodeNonPrintableCharacters(resource.getName());
@@ -51,6 +52,17 @@ public class MarkdownFileScheduler {
                 if (resource.getModified()!=null) metadata.put(Const.MODIFIED, resource.getModified().toString());
                 String content = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
                 documentService.saveDocument(content, metadata);
+
+/*                // tag as external knowledge in the vector store's metadata
+                List<Document> splitDocuments = tokenTextSplitter.split(pdfReader.read());
+                for (Document splitDocument: splitDocuments) { // footnotes
+                    splitDocument.getMetadata().put("filename", pdfResource.getFilename());
+                    splitDocument.getMetadata().put("version", 1);
+                }
+
+                // Sending batch of documents to vector store
+                // Load
+                vectorStore.write(splitDocuments);*/
             }
         }
     }

@@ -22,6 +22,7 @@ public class AppConfig {
     @Value("${webdav.password}")
     private String webdavPassword;
 
+/*
     @Bean
     public BatchingStrategy customTokenCountBatchingStrategy() {
         return new TokenCountBatchingStrategy(
@@ -30,4 +31,5 @@ public class AppConfig {
                 0.1                        // Set the reserve percentage
         );
     }
+*/
 }

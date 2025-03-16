@@ -1,5 +1,7 @@
 package com.hanss.ds.service;
 
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,15 @@ public class OllamaService {
 
     private final OllamaChatModel chatModel;
     private final DocumentService documentService;
+    private final ChatClient ragChatClient;
+    private final RetrievalAugmentationAdvisor retrievalAugmentationAdvisor;
 
-    public OllamaService(OllamaChatModel chatModel, DocumentService documentService) {
+
+    public OllamaService(OllamaChatModel chatModel, DocumentService documentService, ChatClient ragChatClient, RetrievalAugmentationAdvisor retrievalAugmentationAdvisor) {
         this.chatModel = chatModel;
         this.documentService = documentService;
+        this.ragChatClient = ragChatClient;
+        this.retrievalAugmentationAdvisor = retrievalAugmentationAdvisor;
     }
 
     public String askQuestion(String userQuery) {
@@ -32,5 +39,13 @@ public class OllamaService {
 
         // Отправляем в Ollama для генерации ответа
         return chatModel.call(finalPrompt);
+    }
+
+    public String queryLLM(String question) {
+        return ragChatClient.prompt()
+                .advisors(retrievalAugmentationAdvisor)
+                .user(question)
+                .call()
+                .content();
     }
 }
