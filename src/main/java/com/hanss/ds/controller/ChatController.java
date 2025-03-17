@@ -22,7 +22,7 @@ public class ChatController {
     }
 
     @PostMapping("/rag")
-    public ResponseEntity<String> query(@RequestParam(value = "question") String question) {
+    public ResponseEntity<String> query(@RequestBody String question) {
         try {
             String response = ollamaService.queryLLM(question);
             return ResponseEntity.ok().body(response);
