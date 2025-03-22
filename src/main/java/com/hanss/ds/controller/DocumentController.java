@@ -4,6 +4,8 @@ import com.hanss.ds.dto.VectorDataDTO;
 import com.hanss.ds.service.DocumentService;
 import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,7 +25,12 @@ public class DocumentController {
     }
 
     @PostMapping("/save")
-    public void saveDocument(@RequestBody VectorDataDTO vectorDataDTO) {
-        documentService.saveDocument(vectorDataDTO.getContent(), vectorDataDTO.getMetadata());
+    public void saveDocument(@RequestBody VectorDataDTO vectorDataDTO)  {
+        try {
+            documentService.saveDocument(vectorDataDTO.getContent(), vectorDataDTO.getMetadata());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error saving document", e);
+        }
+
     }
 }
