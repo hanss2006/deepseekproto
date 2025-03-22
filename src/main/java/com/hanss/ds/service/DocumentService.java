@@ -23,7 +23,7 @@ public class DocumentService {
         this.vectorStore = vectorStore;
     }
 
-    public void saveDocument(String content, Map<String, String> metadata) throws NoSuchAlgorithmException {
+    public void saveDocument(final String content, final Map<String, String> metadata) throws NoSuchAlgorithmException {
         String contentHash = UrlEncoder.hashContent(content);
         Map<String, String> searchMetadata = Map.of(
                 Const.FILENAME, metadata.get(Const.FILENAME)
