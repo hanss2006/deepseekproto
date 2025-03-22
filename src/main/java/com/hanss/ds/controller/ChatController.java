@@ -16,11 +16,6 @@ public class ChatController {
         this.ollamaService = ollamaService;
     }
 
-    @PostMapping("/query")
-    public String chat(@RequestBody String userInput) {
-        return ollamaService.askQuestion(userInput);
-    }
-
     @PostMapping("/rag")
     public ResponseEntity<String> query(@RequestBody String question) {
         try {
