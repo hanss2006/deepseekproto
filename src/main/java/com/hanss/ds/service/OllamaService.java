@@ -1,9 +1,11 @@
 package com.hanss.ds.service;
 
+import com.hanss.ds.utils.Const;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +20,16 @@ public class OllamaService {
     private final RetrievalAugmentationAdvisor retrievalAugmentationAdvisor;
 
 
-    public OllamaService(OllamaChatModel chatModel, DocumentService documentService, ChatClient ragChatClient, RetrievalAugmentationAdvisor retrievalAugmentationAdvisor) {
+    public OllamaService(OllamaChatModel chatModel, DocumentService documentService, ChatClient ragChatClient) {
         this.chatModel = chatModel;
         this.documentService = documentService;
         this.ragChatClient = ragChatClient;
-        this.retrievalAugmentationAdvisor = retrievalAugmentationAdvisor;
+        this.retrievalAugmentationAdvisor = RetrievalAugmentationAdvisor.builder()
+                .documentRetriever(VectorStoreDocumentRetriever.builder()
+                        .similarityThreshold(Const.SIMILARITY_THRESHOLD)
+                        .vectorStore(documentService.getVectorStore())
+                        .build())
+                .build();
     }
 
     public String askQuestion(String userQuery) {

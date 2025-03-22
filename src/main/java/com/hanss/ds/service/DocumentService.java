@@ -2,6 +2,7 @@ package com.hanss.ds.service;
 
 import com.hanss.ds.utils.Const;
 import com.hanss.ds.utils.UrlEncoder;
+import lombok.Getter;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -18,6 +19,7 @@ import java.util.*;
 import static com.hanss.ds.utils.Const.SIMILARITY_THRESHOLD;
 
 @Service
+@Getter
 public class DocumentService {
     private final VectorStore vectorStore;
 
