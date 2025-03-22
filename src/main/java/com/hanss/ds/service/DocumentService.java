@@ -15,6 +15,8 @@ import org.springframework.core.io.ByteArrayResource;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+import static com.hanss.ds.utils.Const.SIMILARITY_THRESHOLD;
+
 @Service
 public class DocumentService {
     private final VectorStore vectorStore;
@@ -75,7 +77,7 @@ public class DocumentService {
         SearchRequest.Builder builder = SearchRequest.builder()
                 .query(prompt)
                 .topK(Const.TOP_K)
-                //.similarityThreshold(SIMILARITY_THRESHOLD)
+                .similarityThreshold(SIMILARITY_THRESHOLD)
         ;
         if (metadata != null) {
             for (Map.Entry<String, String> entry : metadata.entrySet()) {

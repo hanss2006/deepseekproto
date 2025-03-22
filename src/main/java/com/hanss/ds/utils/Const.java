@@ -9,4 +9,5 @@ public class Const {
     public static final String CHUNK = "chunk";
     public static final int TOP_K = 4;
     public static final String CONTENT_HASH = "content_hash";
+    public static final double SIMILARITY_THRESHOLD = 0.50;
 }
